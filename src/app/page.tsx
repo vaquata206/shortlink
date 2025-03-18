@@ -3,12 +3,22 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { z } from "zod";
 
 // Định nghĩa schema validation
 const schema = z.object({
   url: z.string().url("The URL is required")
 });
+
+type ResultType = {
+  isSuccess: boolean | undefined,
+  message: string | undefined
+}
+
+type ShortLinkRequest = {
+  url: string
+}
 
 export default function Home() {
   const {
@@ -20,16 +30,18 @@ export default function Home() {
   });
 
   const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<any>({
-    isSuccess: false,
-    message: "Có lỗi xảy ra, xin vui lòng thử lại"
+  const [result, setResult] = useState<ResultType>({
+    isSuccess: undefined,
+    message: ""
   });
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(result.message)
+    const copyText = result.message || "";
+    navigator.clipboard.writeText(copyText);
+    toast.success("Copied: " + copyText + " 🎉");
   }
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: ShortLinkRequest) => {
     setLoading(true);
     const request = await fetch("/api/shorten", {
       method: "post",

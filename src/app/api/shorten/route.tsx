@@ -4,13 +4,17 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
     const body = await req.json();
     let short = "";
-    for (var i = 0; i < 10; i++) {
+    let isSuccess = false;
+    for (let i = 0; i < 10; i++) {
         short = makeShort();
         const oldShort = await getLinkByShortLink(short);
-        if (oldShort == null) break;
+        if (oldShort == null) {
+            isSuccess = true;
+            break;
+        }
     }
 
-    if (i < 10) {
+    if (isSuccess) {
         addShortLink(short, body.url);
         return NextResponse.json({
             shortlink: process.env.BASE_URL + "/" + short,

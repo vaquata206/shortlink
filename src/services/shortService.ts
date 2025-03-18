@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 
 export async function getLinkByShortLink(shortLink: string) {
-    var d = await prisma.link.findUnique({ where : {shortLink}});
+    const d = await prisma.link.findUnique({ where : {shortLink}});
     return d;
 }
 

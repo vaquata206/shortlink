@@ -1,0 +1,18 @@
+services:
+    shortlink:
+        build: .
+        container_name: shortlink
+        volumes:
+            - ./prisma:/app/prisma
+        labels:
+            - traefik.enable=true
+            - traefik.http.routers.shortlink.rule=Host(`short.ptc.com.vn`)
+            - traefik.http.routers.shortlink.entrypoints=websecure
+            - traefik.http.routers.shortlink.tls=true
+            - traefik.http.routers.shortlink.tls.certresolver=myresolver
+            - traefik.http.services.shortlinkService.loadbalancer.server.port=3000
+        networks:
+            - reverse-proxy
+networks:
+    reverse-proxy:
+        external: true
