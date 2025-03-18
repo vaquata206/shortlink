@@ -1,4 +1,6 @@
 import Link from "next/link";
+import myQr from "../qr.png"
+import Image from "next/image";
 
 export default function AboutPage() {
     return (
@@ -20,12 +22,15 @@ export default function AboutPage() {
               <div className="text-sm text-muted-foreground">
                 Account number: 0906111075
               </div>
-              <div className="text-sm text-muted-foreground">
-                The source code: <Link target="_blank" href={"https://github.com/vaquata206/shortlink.git"}>https://github.com/vaquata206/shortlink.git</Link>
+              <div className="flex max-w-full justify-center">
+                <Image alt="My QR" src={myQr} width={100} height={100} /><br/>
               </div>
               <Link href={"/"} className="bg-blue-500 text-white py-4 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                 <div className="text-center">Back to home</div>
               </Link>
+              <div className="text-sm text-muted-foreground">
+                The source code: <Link target="_blank" href={"https://github.com/vaquata206/shortlink.git"}>https://github.com/vaquata206/shortlink.git</Link>
+              </div>
             </div>
           </div>
         </div>
